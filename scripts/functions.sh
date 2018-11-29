@@ -18,6 +18,11 @@ INSTALL_DUNITER_DEBIAN_PACKAGE () {
 	rm -f $deb_path
 }
 
+INSTALL_SYSTEMD () {
+	cp ../conf/duniter.service /lib/systemd/system/duniter.service
+	systemctl enable duniter.service
+}
+
 CONFIGURE_DUNITER () {
 	duniter config --ipv4 127.0.0.1 --port $port --remoteh $domain --remotep 80 --noupnp
 	duniter config --addep "BMAS $domain 443"
@@ -50,7 +55,7 @@ REMOVE_DUNITER () {
 	# Stop duniter daemon if running
 	duniter status
 	if [ `echo "$?"` == 0 ]; then
-	    duniter stop
+	    service duniter stop
 	fi
 
 	# Remove Duniter package
