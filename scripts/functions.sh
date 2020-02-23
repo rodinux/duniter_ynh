@@ -1,15 +1,15 @@
 #/bin/bash
 
 INSTALL_DUNITER_DEBIAN_PACKAGE () {
-	version="v1.6.25"
-	git_repo="https://git.duniter.org/nodes/typescript/duniter/"
+        version="v1.7.18"
 	if [ $arch == "x64" ]; then
-		middle_url="-/jobs/7062/artifacts/raw/work/bin/"
+		url_base="https://git.duniter.org/nodes/typescript/duniter/-/jobs/21913/artifacts/raw/work/bin/"
 	else
-		middle_url="uploads/722c2b2901e0c2a13ca3595eae4e696f/"
+		url_base="https://jytou.fr/duniter/"
 	fi
-	deb="duniter-server-$version-linux-$arch.deb"
-	url="${git_repo}${middle_url}${deb}"
+
+        deb="duniter-server-$version-linux-$arch.deb"
+	url="${url_base}${deb}"
 
 	# Retrieve debian package and install it
 	wget -nc --quiet $url -P /tmp
@@ -55,7 +55,7 @@ REMOVE_DUNITER () {
 	# Stop duniter daemon if running
 	duniter status
 	if [ `echo "$?"` == 0 ]; then
-	    service duniter stop
+	    duniter stop
 	fi
 
 	# Remove Duniter package

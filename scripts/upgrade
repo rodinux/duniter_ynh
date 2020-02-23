@@ -19,7 +19,7 @@ INSTALL_DUNITER_DEBIAN_PACKAGE
 INSTALL_SYSTEMD
 CONFIGURE_DUNITER
 
-# Start duniter service
+# Start duniter daemon
 service duniter start
 
 CONFIG_SSOWAT
