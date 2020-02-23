@@ -30,10 +30,10 @@ ynh_user_exists $admin
 # Get CPU architecture and check it
 arch=$(uname -m)
 if [ $arch == "x86_64" ]; then
-	arch="x64"
+  arch="x64"
 fi
 if [[ $arch != "x64" && $arch != "armv7l" ]]; then
-	ynh_die "$arch is not supported." 2
+  ynh_die "$arch is not supported." 2
 fi
 
 # Store config on YunoHost instance
@@ -45,13 +45,14 @@ ynh_app_setting_set "$app" admin "$admin"
 yunohost firewall allow TCP $port > /dev/null 2>&1
 
 INSTALL_DUNITER_DEBIAN_PACKAGE
+INSTALL_SYSTEMD
 CONFIGURE_DUNITER
 
 # Reset Duniter node's existing data (blockchain, not conf)
 duniter reset data > /dev/null
 
 # Launch Duniter node
-duniter webstart
+service duniter start
 
 # Add Duniter service to the YunoHost monitoring
 yunohost service add $app --log /root/.config/$app/"$app"_default/"$app".log
